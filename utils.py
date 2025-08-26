@@ -8,7 +8,7 @@ import os
 import sys
 
 API_URL = os.environ.get("API_URL", "https://elsedev.squareweb.app")
-TIMEOUT = 6
+TIMEOUT = 20
 
 CODES = {
     101: "❌ Key Não Encontrada.",
