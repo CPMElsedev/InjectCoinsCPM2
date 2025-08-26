@@ -2,7 +2,6 @@
 import subprocess
 import uuid
 import platform
-import re
 import requests
 import os
 import sys
@@ -54,54 +53,6 @@ def detect_platform():
     return "unknown"
 
 
-def get_mac_address():
-    plat = detect_platform()
-
-    if plat == "android":
-        out = _run_cmd("ip link show")
-        if out:
-            macs = re.findall(r"link/ether ([0-9a-f:]{17})", out, re.I)
-            for m in macs:
-                if m != "00:00:00:00:00:00":
-                    return m.lower()
-        try:
-            for iface in os.listdir("/sys/class/net/"):
-                if iface == "lo":
-                    continue
-                path = f"/sys/class/net/{iface}/address"
-                if os.path.exists(path):
-                    with open(path, "r") as f:
-                        mac = f.read().strip().lower()
-                    if mac and mac != "00:00:00:00:00:00":
-                        return mac
-        except Exception:
-            pass
-        return None
-
-    if plat == "linux":
-        try:
-            for iface in os.listdir("/sys/class/net/"):
-                if iface == "lo":
-                    continue
-                path = f"/sys/class/net/{iface}/address"
-                if os.path.exists(path):
-                    with open(path, "r") as f:
-                        mac = f.read().strip().lower()
-                    if mac and mac != "00:00:00:00:00:00":
-                        return mac
-        except Exception:
-            pass
-
-    if plat == "windows":
-        out = _run_cmd("getmac")
-        if out:
-            match = re.search(r"([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})", out)
-            if match:
-                return match.group(0).lower()
-
-    return None
-
-
 def get_machine_id():
     plat = detect_platform()
     if plat in ["android", "linux", "macos"]:
@@ -142,7 +93,6 @@ def get_fingerprint():
         return {"error": "❌ Sistema IOS Detectado, Impossível Utilização."}
 
     device_id = get_machine_id()
-    mac_address = get_mac_address()
     os_version = get_os_version()
     model = platform.node()
     manufacturer = "Desconhecido"
@@ -169,7 +119,6 @@ def get_fingerprint():
 
     return {
         "device_id": device_id,
-        "mac_address": mac_address,
         "os_version": os_version,
         "model": model,
         "manufacturer": manufacturer,
