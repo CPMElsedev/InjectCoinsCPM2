@@ -1,0 +1,9 @@
+1 - apt update
+2 - apt upgrade -y
+3 - pkg install python -y
+4 - pkg install git -y
+5 - pkg install python-pip
+6 - git clone https://github.com/CPMElsedev/InjectCoinsCPM2
+7 - cd InjectCoinsCPM2
+8 - pip install -r requirements.txt
+9 - python main.py
