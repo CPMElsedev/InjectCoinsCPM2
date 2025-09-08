@@ -86,14 +86,6 @@ def menu_loop(dados, token, chave, email, password):
         print_info("Key", dados.get("key"))
         print_info("Validade", dados.get("valid_until"))
 
-        print_title_inside_line("Player Information")
-        print_info("Name", dados.get("name"))
-        print_info("LocalId", dados.get("localid"))
-        print_info("Money", dados.get("money"))
-        print_info("Coins", dados.get("coins"))
-        print_info("Slots", dados.get("slots"))
-        print_info("Cars", dados.get("cars_count"))
-
         print_title_inside_line("Menu")
         print(Fore.WHITE + "[" + Fore.CYAN + "01" + Fore.WHITE + "] Inject Account In Generator.")
         print(Fore.WHITE + "[" + Fore.CYAN + "00" + Fore.WHITE + "] Exit Tool.")
@@ -139,13 +131,7 @@ def login_e_menu(key, email, password):
     dados_para_menu = {
         "id": key_result.get("id"),
         "key": key,
-        "valid_until": key_result.get("valid_until"),
-        "name": login_result.get("name"),
-        "localid": login_result.get("localid"),
-        "money": login_result.get("money"),
-        "coins": login_result.get("coins"),
-        "slots": login_result.get("slots"),
-        "cars_count": login_result.get("cars_count")
+        "valid_until": key_result.get("valid_until")
     }
 
     return menu_loop(dados_para_menu, token, key, email, password)
@@ -200,13 +186,7 @@ def main():
         dados_para_menu = {
             "id": key_result.get("id"),
             "key": key,
-            "valid_until": key_result.get("valid_until"),
-            "name": login_result.get("name"),
-            "localid": login_result.get("localid"),
-            "money": login_result.get("money"),
-            "coins": login_result.get("coins"),
-            "slots": login_result.get("slots"),
-            "cars_count": login_result.get("cars_count")
+            "valid_until": key_result.get("valid_until")
         }
 
         recarregar = menu_loop(dados_para_menu, token, key, email, password)
